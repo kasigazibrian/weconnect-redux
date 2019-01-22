@@ -10,4 +10,5 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 export const SEARCH_BUSINESSES = "SEARCH_BUSINESSES";
-
+export const LOG_OUT = "LOG_OUT";
+export const LOG_OUT_FAILED = "LOG_OUT_FAILED";

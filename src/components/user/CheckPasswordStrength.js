@@ -1,4 +1,4 @@
-const checkPasswordStrength = (score) => {
+const checkPasswordStrength = score => {
   let cssClass = "";
   let message = "";
 
@@ -33,9 +33,7 @@ const checkPasswordStrength = (score) => {
         cssClass: cssClass,
         message: message
       };
-
   }
 };
-
 
 export default checkPasswordStrength;

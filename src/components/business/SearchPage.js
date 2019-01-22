@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Collapse,
   Navbar,
@@ -6,10 +6,13 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Button, Input, Container } from 'reactstrap';
-import { Redirect } from 'react-router-dom'
-import logo from '../../images/logo.png';
-import { connect } from 'react-redux';
+  Button,
+  Input,
+  Container
+} from "reactstrap";
+import { Redirect } from "react-router-dom";
+import logo from "../../images/logo.png";
+import { connect } from "react-redux";
 import { searchBusinesses } from "../../actions/businessActions";
 
 class SearchPage extends React.Component {
@@ -18,8 +21,8 @@ class SearchPage extends React.Component {
     this.state = {
       isOpen: false,
       isAuthenticated: false,
-      category: "",
-      location: "",
+      category: "category",
+      location: "location",
       businessName: "",
       perPage: 6,
       isActive: 1,
@@ -28,71 +31,104 @@ class SearchPage extends React.Component {
     };
   }
 
-  // componentWillMount = ()=>{
-  //   // Check for user authentication
-  //   if (localStorage.getItem('token') === null){
-  //     this.setState({isAuthenticated: false})
-  //   }
-  //   else( this.setState({isAuthenticated: true}) )
-  // };
-  // Function to handle search input values
-  handleSearchInputChange = event =>{
-    if(event.target.value === "Location" || event.target.value === "Category"){this.setState({[event.target.name]: ""})}
-    else{ this.setState({[event.target.name]: event.target.value})}
+  handleSearchInputChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
   // Function to handle submit of the search input values
-  handleSubmit = event =>{
-    const { businessName, category, location} = this.state;
+  handleSubmit = event => {
+    let { businessName, category, location } = this.state;
+    if (category === "category" || location === "location"){
+      category = "";
+      location = ""
+    }
     event.preventDefault();
-    this.props.searchBusinesses(businessName, category, location)
-
+    this.props.searchBusinesses(businessName, category, location);
   };
 
   render() {
     const { count } = this.state;
     // Check if search results have been obtained successfully
-    if (count > 0){
+    if (count > 0) {
       return (
         <div>
-          <Redirect to={{
-            pathname: '/search_results',
-            state: {searchObject: this.state}
-          }} />
-        </div>);
+          <Redirect
+            to={{
+              pathname: "/search_results",
+              state: { searchObject: this.state }
+            }}
+          />
+        </div>
+      );
     }
-
 
     return (
       <div>
         <div className="search-bar">
           <Container>
-            <div className="my-logo"></div>
+            <div className="my-logo" />
             <form onSubmit={this.handleSubmit}>
               <Navbar color="dark" light expand="md">
-                <NavbarBrand href="/search" className="text-light"><img src={logo} alt="We Connect!" height="45px" width="42px" />Search for Businesses</NavbarBrand>
+                <NavbarBrand href="/search" className="text-light">
+                  <img
+                    src={logo}
+                    alt="We Connect!"
+                    height="45px"
+                    width="42px"
+                  />
+                  Search for Businesses
+                </NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="ml-auto" navbar>
-                    <NavItem className='nav-item-name-properties'>
-                      <input onChange={this.handleSearchInputChange} name="businessName" placeholder="Enter Business Name" className="my-input" type="text" id="components"/>
+                    <NavItem className="nav-item-name-properties">
+                      <input
+                        onChange={this.handleSearchInputChange}
+                        name="businessName"
+                        placeholder="Enter Business Name"
+                        className="my-input"
+                        type="text"
+                        id="components"
+                      />
                     </NavItem>
-                    <NavItem className='nav-item-name-properties'>
-                      <label  className='my-labels'>Filter By:</label>
+                    <NavItem className="nav-item-name-properties">
+                      <label className="my-labels">Filter By:</label>
                     </NavItem>
-                    <NavItem className='nav-item-name-properties'>
-                      <Input style={{marginTop: "12px"}} onChange={this.handleSearchInputChange} type="select" name="category" id="exampleSelect">
-                        <option selected disabled>Category</option>
+                    <NavItem className="nav-item-name-properties">
+                      <Input
+                        style={{ marginTop: "12px" }}
+                        onChange={this.handleSearchInputChange}
+                        type="select"
+                        name="category"
+                        id="exampleSelect"
+                        value={this.state.category}
+                      >
+                        <option value="category" disabled>
+                          Select Category..
+                        </option>
                         <option value="Entertainment">Entertainment</option>
                         <option value="Real Estate">Real Estate</option>
                         <option value="Education">Education</option>
                         <option value="Automobiles">Automobiles</option>
-                        <option value="Health and Medicine">Health and Medicine</option>
-                        <option value="Computers & Electronics">Computers & Electronics</option>
+                        <option value="Health and Medicine">
+                          Health and Medicine
+                        </option>
+                        <option value="Computers & Electronics">
+                          Computers & Electronics
+                        </option>
                       </Input>
-                    </NavItem >
-                    <NavItem className='nav-item-name-properties'>
-                      <Input style={{marginTop: "12px"}} onChange={this.handleSearchInputChange} type="select" name="location" id="exampleSelect" >
-                        <option style={{color: 'blue'}} selected disabled>Location</option>
+                    </NavItem>
+                    <NavItem className="nav-item-name-properties">
+                      <Input
+                        style={{ marginTop: "12px" }}
+                        onChange={this.handleSearchInputChange}
+                        type="select"
+                        name="location"
+                        id="exampleSelect"
+                        value={this.state.location}
+                      >
+                        <option value={"location"} style={{ color: "blue" }} disabled>
+                          Select Location ..
+                        </option>
                         <option value="wakiso">Wakiso</option>
                         <option value="kabale">Kabale</option>
                         <option value="mbarara">Mbarara</option>
@@ -100,11 +136,10 @@ class SearchPage extends React.Component {
                         <option value="rukungiri">Rukungiri</option>
                       </Input>
                     </NavItem>
-                    <NavItem style={{marginRight: "20px", marginTop: "12px"}}>
+                    <NavItem style={{ marginRight: "20px", marginTop: "12px" }}>
                       <Button color="primary">Search</Button>
                     </NavItem>
-                    <NavItem style={{marginRight: "20px"}}>
-                    </NavItem>
+                    <NavItem style={{ marginRight: "20px" }} />
                   </Nav>
                 </Collapse>
               </Navbar>
@@ -116,11 +151,13 @@ class SearchPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     data: state.businessReducer.data
-
-  }
+  };
 };
 
-export default connect(mapStateToProps, { searchBusinesses })(SearchPage)
+export default connect(
+  mapStateToProps,
+  { searchBusinesses }
+)(SearchPage);
