@@ -35,7 +35,7 @@ const BusinessCards = props => {
       );
     })
   ) : (
-    <div className="font-weight-light font-italic">
+    <div className="font-weight-light font-italic" style={{marginLeft: "15px"}}>
       No businesses registered yet!
     </div>
   );

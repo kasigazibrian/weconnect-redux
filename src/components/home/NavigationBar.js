@@ -90,7 +90,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-  { logOut }
-)(NavigationBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logOut }
+  )(NavigationBar)
+);

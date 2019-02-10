@@ -13,7 +13,7 @@ import {
 import { Redirect } from "react-router-dom";
 import logo from "../../images/logo.png";
 import { connect } from "react-redux";
-import { searchBusinesses } from "../../actions/businessActions";
+import { getBusinesses } from "../../actions/businessActions";
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -21,8 +21,8 @@ class SearchPage extends React.Component {
     this.state = {
       isOpen: false,
       isAuthenticated: false,
-      category: "category",
-      location: "location",
+      category: "",
+      location: "",
       businessName: "",
       perPage: 6,
       isActive: 1,
@@ -33,28 +33,29 @@ class SearchPage extends React.Component {
 
   handleSearchInputChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    // console.log(this.state)
   };
   // Function to handle submit of the search input values
   handleSubmit = event => {
     let { businessName, category, location } = this.state;
-    if (category === "category" || location === "location"){
-      category = "";
-      location = ""
-    }
     event.preventDefault();
-    this.props.searchBusinesses(businessName, category, location);
+    this.props.getBusinesses(
+      this.state.isActive,
+      this.state.perPage,
+      businessName,
+      category,
+      location
+    );
   };
 
   render() {
-    const { count } = this.state;
-    // Check if search results have been obtained successfully
-    if (count > 0) {
+    const { count, searchComplete } = this.props.data;
+    if ((count > 0) && searchComplete) {
       return (
         <div>
           <Redirect
             to={{
-              pathname: "/search_results",
-              state: { searchObject: this.state }
+              pathname: "/search_results"
             }}
           />
         </div>
@@ -102,7 +103,7 @@ class SearchPage extends React.Component {
                         id="exampleSelect"
                         value={this.state.category}
                       >
-                        <option value="category" disabled>
+                        <option value="" disabled>
                           Select Category..
                         </option>
                         <option value="Entertainment">Entertainment</option>
@@ -126,7 +127,11 @@ class SearchPage extends React.Component {
                         id="exampleSelect"
                         value={this.state.location}
                       >
-                        <option value={"location"} style={{ color: "blue" }} disabled>
+                        <option
+                          value=""
+                          style={{ color: "blue" }}
+                          disabled
+                        >
                           Select Location ..
                         </option>
                         <option value="wakiso">Wakiso</option>
@@ -159,5 +164,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { searchBusinesses }
+  { getBusinesses }
 )(SearchPage);

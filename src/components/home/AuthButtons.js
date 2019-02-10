@@ -11,8 +11,10 @@ const AuthButtons = props => {
       <DropdownItem onClick={props.handleLogOut}>
         <FiLogOut style={{ marginBottom: "2px" }} /> Logout
       </DropdownItem>
-      <DropdownItem tag={"a"} href="/register">
+      <DropdownItem>
+      <Link to="/register_business">
         <FaBriefcase /> Register Business
+      </Link>
       </DropdownItem>
       <DropdownItem>
         <Link to="/authuser/userprofile">

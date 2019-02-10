@@ -32,6 +32,7 @@ export default function(state = initialState, action) {
       return { data: { ...state.data, ...action.payload } };
     case LOGIN:
       localStorage.setItem("token", action.payload.Token);
+      localStorage.setItem("user_id", action.payload.User.user_id);
       toast.success(action.payload.Message, {
         position: toast.POSITION.TOP_CENTER
       });
@@ -43,7 +44,9 @@ export default function(state = initialState, action) {
       toast.success(action.payload.Message, {
         position: toast.POSITION.TOP_CENTER
       });
-      return { data: { ...state.data, ...action.payload, authenticationStatus: false } };
+      return {
+        data: { ...state.data, ...action.payload, authenticationStatus: false }
+      };
     case GET_USER_PROFILE:
       return {
         data: { ...state.data, ...action.payload }
@@ -63,7 +66,7 @@ export default function(state = initialState, action) {
       toast.error(action.payload.Message, {
         position: toast.POSITION.BOTTOM_CENTER
       });
-      return { data: { ...state.data, loggedOut: true } };
+      return { data: { ...state.data, authenticationStatus: false } };
     case USER_ACTION_FAILED:
       toast.error(action.payload.Message, {
         position: toast.POSITION.BOTTOM_CENTER

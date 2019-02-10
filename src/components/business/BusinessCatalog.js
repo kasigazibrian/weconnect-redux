@@ -16,21 +16,28 @@ class BusinessCatalog extends React.Component {
       isAuthenticated: false,
       isActive: 1,
       count: 1,
-      perPage: 6
+      perPage: 6,
     };
   }
   // Get the new business list on pagination change
   onChange = (page, pageSize) => {
-    this.props.getBusinesses(page, pageSize);
+    this.props.getBusinesses(page, pageSize, this.props.data.businessName,
+      this.props.data.category, this.props.data.location);
   };
   // Get the new businesses on businesses per page change
   onShowSizeChange = (page, pageSize) => {
-    this.props.getBusinesses(page, pageSize);
+    this.props.getBusinesses(page, pageSize, this.props.data.businessName,
+      this.props.data.category, this.props.data.location);
   };
 
   componentDidMount() {
     // Function to obtain paginated businesses
-    this.props.getBusinesses(this.state.isActive, this.state.perPage);
+    console.log(this.props.data);
+    if(!this.props.data.searchComplete){
+      this.props.getBusinesses(this.state.isActive, this.state.perPage,
+        this.props.data.businessName, this.props.data.category, this.props.data.location);
+    }
+
   }
   // Function to return the total count of businesses on the page
   showTotal = total => `Total ${total} Businesses`;

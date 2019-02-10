@@ -32,7 +32,6 @@ class UserProfile extends React.Component {
   }
   componentDidMount() {
     this.props.getUserProfile(localStorage.getItem("token"));
-
   }
 
   // Display password reset modal when the reset password button is selected
@@ -140,7 +139,7 @@ class UserProfile extends React.Component {
                   Change Password
                 </Button>
                 <Link
-                  to="/register"
+                  to="/register_business"
                   className={"btn btn-lg btn-secondary btn-block"}
                 >
                   Register Business
